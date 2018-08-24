@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyflame.Formula", "Hyflame.Formula\Hyflame.Formula.csproj", "{DA8CFA79-9217-4E29-A339-00BFEE5A7EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hyflame.Formula.Tester", "Hyflame.Formula.Tester\Hyflame.Formula.Tester.csproj", "{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tester", "Tester", "{CE122E04-BB09-4B0A-94E1-CCEA6030B372}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA8CFA79-9217-4E29-A339-00BFEE5A7EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8CFA79-9217-4E29-A339-00BFEE5A7EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8CFA79-9217-4E29-A339-00BFEE5A7EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8CFA79-9217-4E29-A339-00BFEE5A7EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B09883B-ABF8-492A-B80E-3AAE7F6AF85D} = {CE122E04-BB09-4B0A-94E1-CCEA6030B372}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC5DB0D9-A8D1-4258-97AA-2E4CDA30DF69}
+	EndGlobalSection
+EndGlobal
