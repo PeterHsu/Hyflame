@@ -11,7 +11,10 @@ namespace Hyflame.Formula.Tester
             //TestIRS();
             //IRSTester.TestFR3();
             //RateTester.Test利率();
-            RateTester.Test折現因子();
+            //RateTester.Test折現因子();
+            //RateTester.Test天數();
+            //RateTester.Test線性插補法();
+            RateTester.PeterTest();
             Console.ReadLine();
         }
         static void TestWarrant()
