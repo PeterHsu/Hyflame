@@ -7,7 +7,12 @@ namespace Hyflame.Formula.Tester
         static void Main(string[] args)
         {
             //TestWarrant();
-            TestWarrant2();
+            //TestWarrant2();
+            //TestIRS();
+            //IRSTester.TestFR3();
+            //RateTester.Test利率();
+            RateTester.Test折現因子();
+            Console.ReadLine();
         }
         static void TestWarrant()
         {
@@ -36,6 +41,10 @@ namespace Hyflame.Formula.Tester
             //#調整後的行使比例為0.444
             (double fs, double fk, double fn) = Warrant.ReductionEx(s, a, d, k, n);
             Console.WriteLine($"新參考價={fs}, 新履約價={fk}, 新行使比例={fn}");
+        }
+        static void TestIRS()
+        {
+            Console.WriteLine(IRS.Vk(10 / 100, 1));
         }
     }
 }
