@@ -66,15 +66,15 @@ namespace Hyflame.Formula
             decimal V = 1 / 單利利率因子D(Rn, t);
             return V;
         }
-        public static double 線性插補法(double Rt1, double t1, double Rt2, double t2 , double tn)
+        public static double 線性插補法(double Rt1, double t1, double Rt2, double t2, double tn)
         {
             double Rtn = Rt1 + (Rt2 - Rt1) / (t2 - t1) * (tn - t1);
             return Rtn;
         }
-        public static double 線性插補法2(double Rt1, double t1, double Rt2, double t2, double tn)
+        public static double 線性插補法Ex(double[] points, double[] values, double point)
         {
-            var interpolate = MathNet.Numerics.Interpolate.Linear(new double[] { t1, t2 }, new double[] { Rt1, Rt2 } );
-            double Rtn = interpolate.Interpolate(124);
+            var interpolate = MathNet.Numerics.Interpolate.Linear(points, values);
+            double Rtn = interpolate.Interpolate(point);
             return Rtn;
         }
         public static double 指數插補法(double Rt1, double t1, double Rt2, double t2, double tn)
@@ -89,6 +89,30 @@ namespace Hyflame.Formula
         {
             double f = ((V1 / V2) - 1) * F;
             return f;
+        }
+        public static double 遠期利率合約(double Rt, double t, double Rts, double ts)
+        {
+            double A = Math.Pow(1 + Rts, ts / 365d);
+            double B = Math.Pow(1 + Rt, t / 365d);
+            double FRA = Math.Pow(A / B, 365d / (ts - t)) - 1;
+            return FRA;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Rt1zero">上一期的Zero Rate</param>
+        /// <param name="t1">上一期的天數/365</param>
+        /// <param name="Rt">這期用插補法算出的利率</param>
+        /// <returns></returns>
+        public static double IRS遠期利率(double Rt1zero, double t1, double Rt)
+        {
+            //#不知道理論是什麼
+            //#看起來是假設本金為1
+            //#Rt*t = 本期利息
+            //$Rt1*Rt1365 = 上期利息
+            //遠期利率=(本期利息-上期利息)/90天
+            double FR = (Rt * (t1 + 90 / 365d) - Rt1zero * t1) / (90 / 365d);
+            return FR;
         }
 
     }
