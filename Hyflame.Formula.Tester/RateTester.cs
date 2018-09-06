@@ -123,6 +123,11 @@ namespace Hyflame.Formula.Tester
             double Rt = 0.00763859470762197;
             double Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
             Console.WriteLine(Rtn);
+            R1Zero = 0.00897698142798124;
+             R1t365 = 4.75616438356164;
+             Rt = 0.00915219177883765;
+             Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
+            Console.WriteLine(Rtn);
 
         }
     }
