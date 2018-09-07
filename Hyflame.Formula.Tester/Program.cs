@@ -17,8 +17,33 @@ namespace Hyflame.Formula.Tester
             //RateTester.PeterTest();
             //RateTester.Test遠期利率合約();
             //RateTester.Test線性插補法2();
-            RateTester.TestIRS遠期利率();
+            //RateTester.TestIRS遠期利率();
+            TestIRS2();
             Console.ReadLine();
+        }
+        static void TestIRS2()
+        {
+            double PV = 1;
+            double R = 0.5;
+            double d = 1;
+            double I = R * d / 365d;
+            Console.WriteLine($"利息為:{I}");
+            double FV = PV * (1 + R * d / 365d);
+            Console.WriteLine($"本利和:{FV}");
+            double DF = 1 / (1 + R * d / 365);
+            Console.WriteLine($"折現因子為:{DF}");
+            double newPV = FV * DF;
+            Console.WriteLine($"驗證折現因子推回現值:{newPV}");
+            double newFV = PV * Math.Pow(DF, -1);
+            Console.WriteLine($"驗證折現因子推本利和{newFV}");
+            double zero = -1 * Math.Log(DF) / (d / 365d);
+            Console.WriteLine($"零息利率為{zero}", zero);
+            double newPV2 = FV * Math.Exp(-1 * zero * d / 365d);
+            Console.WriteLine($"驗證零息利率推回現值{newPV2}");
+            double newFV2 = PV * Math.Exp(zero * d / 365d);
+            Console.WriteLine($"驗證零息利率推終值{newFV2}");
+            double newDF = Math.Exp(-1 * zero * d / 365d);
+            Console.WriteLine($"從零息利率找折現因子{newDF}");
         }
         static void TestWarrant()
         {

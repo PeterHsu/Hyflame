@@ -100,18 +100,19 @@ namespace Hyflame.Formula
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Rt1zero">上一期的Zero Rate</param>
+        /// <param name="Rt1zero">上個Tenor的Zero Rate</param>
         /// <param name="t1">上一期的天數/365</param>
         /// <param name="Rt">這期用插補法算出的利率</param>
+        /// <param name="s">t-t1</param>
         /// <returns></returns>
-        public static double IRS遠期利率(double Rt1zero, double t1, double Rt)
+        public static double IRS遠期利率(double Rt1zero, double t1, double Rt, double s)
         {
-            //#不知道理論是什麼
+            //#不知道理論是什麼, 這樣算出來的結果是t1到t的遠期利率
             //#看起來是假設本金為1
             //#Rt*t = 本期利息
             //$Rt1*Rt1365 = 上期利息
             //遠期利率=(本期利息-上期利息)/90天
-            double FR = (Rt * (t1 + 90 / 365d) - Rt1zero * t1) / (90 / 365d);
+            double FR = (Rt * (t1 + s / 365d) - Rt1zero * t1) / (s / 365d);
             return FR;
         }
 

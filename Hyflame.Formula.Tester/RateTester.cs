@@ -118,16 +118,17 @@ namespace Hyflame.Formula.Tester
         }
         internal static void TestIRS遠期利率()
         {
-            double R1Zero = 0.0065117694163945;
-            double R1t365 = 0.246575342465753;
-            double Rt = 0.00763859470762197;
-            double Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
-            Console.WriteLine(Rtn);
-            R1Zero = 0.00897698142798124;
-             R1t365 = 4.75616438356164;
-             Rt = 0.00915219177883765;
-             Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
-            Console.WriteLine(Rtn);
+            //double R1Zero = 0.0065117694163945;
+            //double R1t365 = 0.246575342465753;
+            //double Rt = 0.00763859470762197;
+            //double Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
+            //Console.WriteLine(Rtn);
+            //double FRA = Rate.遠期利率合約(0.65117694163945, 0.246575342465753 * 365 , 0.763859470762197, 0.493150684931507 * 365);
+            //Console.WriteLine(FRA);            //R1Zero = 0.00897698142798124;
+            // R1t365 = 4.75616438356164;
+            // Rt = 0.00915219177883765;
+            // Rtn = Rate.IRS遠期利率(R1Zero, R1t365, Rt);
+            //Console.WriteLine(Rtn);
 
         }
     }
