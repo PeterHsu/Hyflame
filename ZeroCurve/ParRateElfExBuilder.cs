@@ -6,19 +6,19 @@ using Hyflame.ZeroCurve.Elves;
 
 namespace Hyflame.ZeroCurve
 {
-    class ParRateElfExBuilder
+    internal class ParRateElfExBuilder
     {
         public List<ParRateElfEx> ParRateList { get; } = new List<ParRateElfEx>();
         public DateTime TradeDate { get; }
         public DateTime SpotDate { get; set; }
-        private TradeDateAx m_tradeDateHelper;
+        private TradeDateAx m_tradeDateAx;
         const double ACTUAL = 365; //# 預設採用ACT/365
-        public ParRateElfExBuilder(DateTime tradeDate, DateTime spotDate, DateTime endDate, List<DateTime> holidays)
+        public ParRateElfExBuilder(DateTime tradeDate, DateTime spotDate, TradeDateAx tradeDateAx)
         {
             //# 因為SpotDate可以由交易日強制修改,所以不能用TradeDate去推算,所以要帶入實際的spotDate
             this.TradeDate = tradeDate;
             this.SpotDate = spotDate;
-            this.m_tradeDateHelper = new TradeDateAx(tradeDate, endDate, holidays);
+            this.m_tradeDateAx = tradeDateAx;
         }
         public void AddParRate(ParRateElf parRateInfo)
         {
@@ -88,11 +88,11 @@ namespace Hyflame.ZeroCurve
 
             #region 取到期日
             if (parRateInfo.Unit == EnumTenorUnit.Day)
-                endDate = m_tradeDateHelper.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
+                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
             if (parRateInfo.Unit == EnumTenorUnit.Month)
-                endDate = m_tradeDateHelper.AdjustTradeDate(startDate.AddMonths(parRateInfo.Tenor));
+                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddMonths(parRateInfo.Tenor));
             if (parRateInfo.Unit == EnumTenorUnit.Year)
-                endDate = m_tradeDateHelper.AdjustTradeDate(startDate.AddYears(parRateInfo.Tenor));
+                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddYears(parRateInfo.Tenor));
             #endregion 取到期日
             days = (endDate - this.TradeDate).TotalDays;
             daysAct = days / ACTUAL;

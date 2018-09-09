@@ -10,4 +10,10 @@
     <ProjectReference Include="..\ZeroCurve\ZeroCurve.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="holidays.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

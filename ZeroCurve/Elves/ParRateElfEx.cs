@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Hyflame.ZeroCurve.Elves
 {
-    class ParRateElfEx
+    public class ParRateElfEx
     {
         public ParRateElfEx(ParRateElf parRateInfo, DateTime startDate, DateTime endDate, double days, double daysActual, double zero)
         {
