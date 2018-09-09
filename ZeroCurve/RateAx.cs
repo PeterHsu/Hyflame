@@ -5,17 +5,19 @@ using System.Text;
 namespace Hyflame.ZeroCurve
 {
     /// <summary>
-    /// 利率常用的函式庫, Ax表示僅提供最單純的Static Function
+    /// 利率常用的函式庫
     /// </summary>
     public static class RateAx
     {
+        const double ACTUAL = 365;
+
         #region 已驗證過的函式
         public static double 單利終值_T(double PV, double r, double t)
         {
             double FV = PV * (1 + r * t);
             return FV;
         }
-        public static double 單利終值_D(double PV, double r, double d, double actual = 365)
+        public static double 單利終值_D(double PV, double r, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double FV = 單利終值_T(PV, r, t);
@@ -31,7 +33,7 @@ namespace Hyflame.ZeroCurve
             double PV = FV * DF;
             return PV;
         }
-        public static double 現值_D_零息利率(double FV, double z, double d, double actual = 365)
+        public static double 現值_D_零息利率(double FV, double z, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double PV = 現值_T_零息利率(FV, z, t);
@@ -42,7 +44,7 @@ namespace Hyflame.ZeroCurve
             double PV = FV * Math.Exp(-1 * z * t);
             return PV;
         }
-        public static double 終值_D_零息利率(double PV, double z, double d, double actual = 365)
+        public static double 終值_D_零息利率(double PV, double z, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double FV = 終值_T_零息利率(PV, z, t);
@@ -53,7 +55,7 @@ namespace Hyflame.ZeroCurve
             double FV = PV * Math.Exp(z * t);
             return FV;
         }
-        public static double 折現因子_D_零息利率(double z, double d, double actual = 365)
+        public static double 折現因子_D_零息利率(double z, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double DF = 折現因子_T_零息利率(z, t);
@@ -64,7 +66,7 @@ namespace Hyflame.ZeroCurve
             double DF = Math.Exp(-1 * z * t);
             return DF;
         }
-        public static double 零息利率_D_折現因子(double DF, double d, double actual = 365)
+        public static double 零息利率_D_折現因子(double DF, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double z = 零息利率_T_折現因子(DF, t);
@@ -82,7 +84,7 @@ namespace Hyflame.ZeroCurve
         /// <param name="d"></param>
         /// <param name="actual"></param>
         /// <returns></returns>
-        public static double 零息利率_D_R(double r, double d, double actual = 365)
+        public static double 零息利率_D_R(double r, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double z = 零息利率_T_R(r, t);
@@ -107,7 +109,7 @@ namespace Hyflame.ZeroCurve
         /// <param name="d"></param>
         /// <param name="actual"></param>
         /// <returns></returns>
-        public static double TN零息利率(double DF1d, double r, double d, double actual = 365)
+        public static double TN零息利率(double DF1d, double r, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double t2 = (d - 1) / actual;
@@ -121,7 +123,7 @@ namespace Hyflame.ZeroCurve
         /// <param name="d"></param>
         /// <param name="actual"></param>
         /// <returns></returns>
-        public static double 折現因子_D_R(double r, double d, double actual = 365)
+        public static double 折現因子_D_R(double r, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double DF = 折現因子_T_R(r, t);
@@ -145,7 +147,7 @@ namespace Hyflame.ZeroCurve
         /// <param name="d"></param>
         /// <param name="actual"></param>
         /// <returns></returns>
-        public static double 折現因子_D_Z(double z, double d, double actual = 365)
+        public static double 折現因子_D_Z(double z, double d, double actual = ACTUAL)
         {
             double t = d / actual;
             double DF = 折現因子_T_Z(z, t);
