@@ -1,11 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RateAx = Hyflame.ZeroCurve.RateAx;
+
 
 namespace Hyflame.Formula.Tester
 {
     static class RateTester
     {
+        internal static void Test單利()
+        {
+            //# 單利公式
+            double PV = 1; //# 本金
+            double R = 0.5;　//# 年利率
+            double d = 1; //# 天數
+            double FV = RateAx.單利終值_D(PV, R, d);
+            Console.WriteLine($"單利終值:{FV}");
+            double DF = RateAx.折現因子_D_R(R, d);
+            Console.WriteLine($"折現因子為:{DF}");
+            double newPV = RateAx.現值_折現因子(FV, DF);
+            Console.WriteLine($"驗證折現因子推現值:{newPV}");
+            double newFV = RateAx.終值_折現因子(PV, DF);
+            Console.WriteLine($"驗證折現因子推終值:{newFV}");
+            Console.WriteLine("".PadRight(10,'-'));
+            //# 零息利率公式
+            double zero = RateAx.零息利率_D_R(R, d);
+            Console.WriteLine($"零息利率為:{zero}", zero);
+            newPV = RateAx.現值_D_零息利率(FV, zero, d);
+            Console.WriteLine($"驗證零息利率推現值:{newPV}");
+            newFV = RateAx.終值_D_零息利率(PV, zero, d);
+            Console.WriteLine($"驗證零息利率推終值:{newFV}");
+            double newDF = RateAx.折現因子_D_零息利率(zero, d);
+            Console.WriteLine($"從零息利率找折現因子:{newDF}");
+            double newZero = RateAx.零息利率_D_折現因子(DF, d);
+            Console.WriteLine($"從折現因子找零息利率:{newZero}");
+
+        }
         internal static void Test利率()
         {
             double PV = 100;
