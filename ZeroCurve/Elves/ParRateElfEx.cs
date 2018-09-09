@@ -13,6 +13,7 @@ namespace Hyflame.ZeroCurve.Elves
             this.Rate = parRateInfo.Rate;
             this.Market = parRateInfo.Market;
             this.StartDate = startDate;
+            this.EndDate = endDate;
             this.Days = days;
             this.DaysAct = daysActual;
             this.Zero = zero;
@@ -28,5 +29,9 @@ namespace Hyflame.ZeroCurve.Elves
         public double DaysAct { get; set; }
         public double Zero { get; set; }
         public double DF { get; set; }
+        public override string ToString()
+        {
+            return $"Tenor={Tenor}, Unit={Unit}, Rate={Rate}, Market={Market}, StartDate={StartDate}, EndDate={EndDate}, Days={Days}, DaysAct={DaysAct}, Zero={Zero}, DF={DF}";
+        }
     }
 }

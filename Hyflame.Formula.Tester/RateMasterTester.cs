@@ -38,6 +38,8 @@ namespace Hyflame.Formula.Tester
             RateMaster rateMaster = new RateMaster(tradeDate, tradeDate.AddYears(10), parRateElfList, holidays);
             rateMaster.Run();
             Console.WriteLine(rateMaster.SpotDate);
+            foreach (var item in rateMaster.ParRateList)
+                Console.WriteLine(item);
         }
     }
 }
