@@ -165,17 +165,32 @@ namespace Hyflame.ZeroCurve
             return DF;
         }
         #endregion 已驗證過的函式
-        public static double 遠期利率1(double Rt, double t, double Rts, double ts)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Rt"></param>
+        /// <param name="t"></param>
+        /// <param name="Rts"></param>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public static double 遠期利率合約_T(double Rt, double t, double Rts, double ts)
         {
-            double A = Math.Pow(1 + Rts, ts / 365d);
-            double B = Math.Pow(1 + Rt, t / 365d);
-            double FRA = Math.Pow(A / B, 365d / (ts - t)) - 1;
+            double A = Math.Pow(1 + Rts, ts);
+            double B = Math.Pow(1 + Rt, t);
+            double FRA = Math.Pow(A / B, ACTUAL / (ts - t)) - 1;
             return FRA;
         }
-
-        public static double 遠期利率2(double Rt1zero, double t1, double Rt, double s)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Rt1zero">t天的Zero Rate</param>
+        /// <param name="t1">t天的DaysAct</param>
+        /// <param name="Rt">n天後的Zero Rate</param>
+        /// <param name="n">相隔n天</param>
+        /// <returns></returns>
+        public static double 遠期利率2(double Rt1zero, double t1, double Rt, double n)
         {
-            double FR = (Rt * (t1 + s / 365d) - Rt1zero * t1) / (s / 365d);
+            double FR = (Rt / 100 * (t1 + n / ACTUAL) - Rt1zero / 100 * t1) / (n / ACTUAL);
             return FR;
         }
     }

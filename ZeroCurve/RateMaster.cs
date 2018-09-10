@@ -43,11 +43,22 @@ namespace Hyflame.ZeroCurve
             double zero = interpolate.Interpolate(t);
             return zero;
         }
-        public double GetZeroRate_T(double t)
+        public (double, double, double, double, double) GetZeroRate_T(double t, double t1)
         {
+            //# 零息利率, 遠期利率, 折現因子, 驗證零息利率, Swap
             var interpolate = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Zero));
+            double zero2 = interpolate.Interpolate(t1 + 90 / 365d);
+            double zero1 = interpolate.Interpolate(t1);
             double zero = interpolate.Interpolate(t);
-            return zero;
+            
+            double FR = RateAx.遠期利率2(zero1, t1, zero2, 90); //# 算上一期到加90天的利率
+            double DF = RateAx.折現因子_T_零息利率(zero, t);
+            double newZero = RateAx.零息利率_T_折現因子(DF, t);
+
+            var interpolate2 = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Rate));
+            double rate = interpolate2.Interpolate(t);
+
+            return (zero, FR, DF, newZero, rate);
         }
     }
 }

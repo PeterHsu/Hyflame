@@ -40,21 +40,21 @@ namespace Hyflame.Formula.Tester
             //Console.WriteLine(rateMaster.SpotDate);
             //foreach (var item in rateMaster.ParRateList)
             //    Console.WriteLine(item);
-            Console.WriteLine(rateMaster.GetZeroRate_T(0.2493150684931507));
-            Console.WriteLine(rateMaster.GetZeroRate_T(0.4986301369863014));
-            Console.WriteLine(rateMaster.GetZeroRate_T(0.7534246575342466));
-            Console.WriteLine(rateMaster.GetZeroRate_T(1.0054794520547945));
-            Console.WriteLine(rateMaster.GetZeroRate_T(1.2547945205479452));
-            Console.WriteLine(rateMaster.GetZeroRate_T(1.5041095890410958));
-            Console.WriteLine(rateMaster.GetZeroRate_T(1.7561643835616438));
-            Console.WriteLine(rateMaster.GetZeroRate_T(2.0136986301369864));
-            Console.WriteLine(rateMaster.GetZeroRate_T(2.263013698630137));
-            Console.WriteLine(rateMaster.GetZeroRate_T(2.504109589041096));
-            Console.WriteLine(rateMaster.GetZeroRate_T(2.7616438356164386));
-            Console.WriteLine(rateMaster.GetZeroRate_T(3.010958904109589));
-            Console.WriteLine(rateMaster.GetZeroRate_T(3.26027397260274));
-            Console.WriteLine(rateMaster.GetZeroRate_T(3.5095890410958903));
-            Console.WriteLine(rateMaster.GetZeroRate_T(3.758904109589041));
+            Console.WriteLine(rateMaster.GetZeroRate_T(0.2493150684931507, 0));
+            Console.WriteLine(rateMaster.GetZeroRate_T(0.4986301369863014, 0.2493150684931507));
+            Console.WriteLine(rateMaster.GetZeroRate_T(0.7534246575342466, 0.4986301369863014));
+            Console.WriteLine(rateMaster.GetZeroRate_T(1.0054794520547945, 0.7534246575342466));
+            Console.WriteLine(rateMaster.GetZeroRate_T(1.2547945205479452, 1.0054794520547945));
+            Console.WriteLine(rateMaster.GetZeroRate_T(1.5041095890410958, 1.2547945205479452));
+            Console.WriteLine(rateMaster.GetZeroRate_T(1.7561643835616438, 1.5041095890410958));
+            Console.WriteLine(rateMaster.GetZeroRate_T(2.0136986301369864, 1.7561643835616438));
+            Console.WriteLine(rateMaster.GetZeroRate_T(2.263013698630137, 2.0136986301369864));
+            Console.WriteLine(rateMaster.GetZeroRate_T(2.504109589041096, 2.263013698630137));
+            Console.WriteLine(rateMaster.GetZeroRate_T(2.7616438356164386, 2.504109589041096));
+            Console.WriteLine(rateMaster.GetZeroRate_T(3.010958904109589, 2.7616438356164386));
+            Console.WriteLine(rateMaster.GetZeroRate_T(3.26027397260274, 3.010958904109589));
+            Console.WriteLine(rateMaster.GetZeroRate_T(3.5095890410958903, 3.26027397260274));
+            Console.WriteLine(rateMaster.GetZeroRate_T(3.758904109589041, 3.5095890410958903));
         }
     }
 }
