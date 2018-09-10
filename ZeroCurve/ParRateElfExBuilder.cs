@@ -79,6 +79,121 @@ namespace Hyflame.ZeroCurve
         private void AddParRateForCOSMOS(DateTime startDate, ParRateElf parRateInfo)
         {
             (DateTime endDate, double days, double daysAct) = GetEndDate(startDate, parRateInfo);
+            double zero = 1;
+            #region 取零息利率
+            //# 先加入新的COSMOS利率, zero先預設為1
+            this.ParRateList.Add(new ParRateElfEx(parRateInfo, this.TradeDate, endDate, days, daysAct, zero));
+            //# 先取出已經存在的COSMOS利率資料重算
+            List<ParRateElfEx> cosmosList = this.ParRateList.Where(p => p.Market == EnumRateMarket.COSMOS).ToList();
+            
+            cosmosList.Add(new ParRateElfEx(parRateInfo, this.TradeDate, endDate, days, daysAct, zero));
+            //# 為防萬一先排序一下
+            cosmosList = (from item in cosmosList
+                          orderby item.Days
+                          select item).ToList();
+
+            //# 取最後的Taibor利率
+            var maxTaibor = (from item in this.ParRateList
+                             where item.Market == EnumRateMarket.Taibor
+                             orderby item.Days descending
+                             select item).First();
+            GetZero(maxTaibor, cosmosList);
+            #endregion
+        }
+        private void GetZero(ParRateElfEx maxTaibor, List<ParRateElfEx> cosmosList)
+        {
+            for (int swap = 0; swap < cosmosList.Count; swap++)
+            {
+                //# 先給定一個外插的斜率
+                double slope1 = (cosmosList[swap].Rate - maxTaibor.Rate) / (cosmosList[swap].DaysAct - maxTaibor.DaysAct);
+                double slope2;
+                //# 牛頓法設定
+                double fixedRate = 0.0001;
+                double epsilon = 0.000_000_000_001;
+                int maxIter = 10;
+                double zero = 1;
+
+                //# 檢驗用不同的slope帶入後, 最得決定斜率為何
+                for (int i=0;i<= maxIter;i++)
+                {
+                    //# 檢驗用不同的slope帶入後, 算出的IRS的NPV
+                    double value1 = YieldCurveLinearBootstrap1(cosmosList[swap].Tenor, maxTaibor, slope1, cosmosList[swap].DaysAct, cosmosList[swap].Rate);
+                    //# 用線性插補法算出 Zero Rate
+                    zero = maxTaibor.Zero + slope1 * (cosmosList[swap].DaysAct - maxTaibor.DaysAct);
+                    //# 調整斜率
+                    slope2 = slope1 - fixedRate;
+                    //# 檢驗用不同的slope帶入後, 算出的IRS的NPV
+                    double value2 = YieldCurveLinearBootstrap1(cosmosList[swap].Tenor, maxTaibor, slope2, cosmosList[swap].DaysAct, cosmosList[swap].Rate);
+                    //# 以下不知
+                    double dx = (value2 - value1) / fixedRate;
+                    if (Math.Abs(dx) < epsilon) break;
+                    slope1 = slope1 - (0 - value1) / dx;
+                }
+                //# 得到Zero Rate
+                cosmosList[swap].Zero = zero;
+            }
+        }
+        public double YieldCurveLinearBootstrap1(int year, ParRateElfEx maxTaibor, double slope, double daysAct, double irsRate)
+        {
+            //# 展開此COSMOS的利率, 總共有多少次計息, 每3個月計息一次, 1年就有4次
+            IRSRateElf[] irsList = new IRSRateElf[year * 4];
+
+            //# 預設NPV為-100, 不知道為什麼
+            double npv = -100;
+
+            for (int row = 0; row < irsList.Length; row++)
+            {
+                //# 每3個月計息一次, 取得計息日, 換算出天數相關資料
+                irsList[row].EndDate = m_tradeDateAx.AdjustTradeDate(SpotDate.AddMonths((row + 1) * 3));
+                irsList[row].Days = (irsList[row].EndDate - TradeDate).TotalDays;
+                irsList[row].DaysAct = irsList[row].Days / ACTUAL;
+                if (row == 0)
+                {
+                    irsList[row].TenorDays = (irsList[row].EndDate - SpotDate).TotalDays;
+                }
+                else
+                {
+                    irsList[row].TenorDays = (irsList[row].EndDate - irsList[row - 1].EndDate).TotalDays;
+                }
+                irsList[row].TenorDaysAct = irsList[row].TenorDays / ACTUAL;
+                //# 如果還在Taibor的利率範圍內, 直接用線性插補法取得Zero Rate
+                if(irsList[row].Days < maxTaibor.Days)
+                {
+                    //# 先取得Taibor的資料
+                    var taiborList = from item in this.ParRateList
+                                     where item.Market == EnumRateMarket.Interbank || item.Market == EnumRateMarket.Taibor
+                                     orderby item.Days
+                                     select item;
+
+                    var interpolate = MathNet.Numerics.Interpolate.Linear(taiborList.Select(p => p.DaysAct), taiborList.Select(p => p.Zero));
+                    irsList[row].Zero = interpolate.Interpolate(irsList[row].DaysAct);
+                }
+                else //# 如果超過了Taibor的利率範圍, 還是用線性插補法取得, 只是改用了COSMOS和Taibor的斜率
+                {
+                    irsList[row].Zero = maxTaibor.Zero + slope * (irsList[row].DaysAct - maxTaibor.DaysAct);
+                }
+                //# 如果是此IRS最後一個Tenor了
+                if(row == irsList.Length -1)
+                {
+                    //# 不知道為什麼最後一個利息要加100元
+                    irsList[row].Interest = irsRate * irsList[row].DaysAct + 100;
+                }
+                else
+                {
+                    irsList[row].Interest = irsRate * irsList[row].DaysAct;
+                }
+                //# 算折現因子
+                var DFx = 1 / Math.Exp(irsList[row].Zero * 0.01 * irsList[row].DaysAct);
+                //# 取得TN利率
+                var tnRate = this.ParRateList.Where(p => p.Market == EnumRateMarket.Interbank && p.Tenor == 2).First();
+                var DFy = 1 / Math.Exp(tnRate.Zero * 0.01 * tnRate.DaysAct);
+                irsList[row].DF = DFx * DFy;
+                //# 算NPV
+                irsList[row].NPV = irsList[row].Interest * irsList[row].DF;
+                //# 總計NPV
+                npv += irsList[row].NPV;
+            }
+            return npv;
         }
         private (DateTime, double, double) GetEndDate(DateTime startDate, ParRateElf parRateInfo)
         {
