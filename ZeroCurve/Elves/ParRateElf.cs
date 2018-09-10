@@ -6,17 +6,19 @@ namespace Hyflame.ZeroCurve.Elves
 {
     public class ParRateElf
     {
-        public ParRateElf(int tenor, EnumTenorUnit unit, double rate, EnumRateMarket market)
+        public ParRateElf(int tenor, EnumTenorUnit unit, double rate, EnumRateMarket market, double fakeDays = 0)
         {
-            Tenor = tenor;
-            Unit = unit;
-            Rate = rate;
-            Market = market;
+            this.Tenor = tenor;
+            this.Unit = unit;
+            this.Rate = rate;
+            this.Market = market;
+            this.FakeDays = fakeDays;
         }
         public int Tenor { get; }
         public EnumTenorUnit Unit { get; }
         public double Rate { get; }
         public EnumRateMarket Market { get; }
+        public double FakeDays { get; set; }
     }
  
 }

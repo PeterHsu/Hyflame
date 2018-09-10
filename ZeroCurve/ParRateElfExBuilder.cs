@@ -201,16 +201,26 @@ namespace Hyflame.ZeroCurve
             double days = 0; //# 從交易日至到期日總天數
             double daysAct = 0; //# 總天數 / Actual
 
-            #region 取到期日
-            if (parRateInfo.Unit == EnumTenorUnit.Day)
-                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
-            if (parRateInfo.Unit == EnumTenorUnit.Month)
-                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddMonths(parRateInfo.Tenor));
-            if (parRateInfo.Unit == EnumTenorUnit.Year)
-                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddYears(parRateInfo.Tenor));
-            #endregion 取到期日
-            days = (endDate - this.TradeDate).TotalDays;
-            daysAct = days / ACTUAL;
+            //# 表示驗證用, 會改寫days及daysAct
+            if (parRateInfo.FakeDays > 0)
+            {
+                days = parRateInfo.FakeDays;
+                daysAct = days / ACTUAL;
+                endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.FakeDays));
+            }
+            else
+            {
+                #region 取到期日
+                if (parRateInfo.Unit == EnumTenorUnit.Day)
+                    endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
+                if (parRateInfo.Unit == EnumTenorUnit.Month)
+                    endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddMonths(parRateInfo.Tenor));
+                if (parRateInfo.Unit == EnumTenorUnit.Year)
+                    endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddYears(parRateInfo.Tenor));
+                #endregion 取到期日
+                days = (endDate - this.TradeDate).TotalDays;
+                daysAct = days / ACTUAL;
+            }
             return (endDate, days, daysAct);
         }
     }

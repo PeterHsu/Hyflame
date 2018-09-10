@@ -98,8 +98,8 @@ namespace Hyflame.ZeroCurve
         /// <returns></returns>
         public static double 零息利率_T_R(double r, double t)
         {
-            double z = Math.Log(1 + r * t) / t;
-            return z;
+            double z = Math.Log(1 + r / 100 * t) / t;
+            return z * 100;
         }
         /// <summary>
         /// TN專用零息利率
@@ -113,8 +113,8 @@ namespace Hyflame.ZeroCurve
         {
             double t = d / actual;
             double t2 = (d - 1) / actual;
-            double z = -1 * Math.Log(DF1d / (1 + r * t2)) / t;
-            return z;
+            double z = -1 * Math.Log(DF1d / (1 + r / 100 * t2)) / t;
+            return z * 100;
         }
         /// <summary>
         /// 折現因子 By Days and Par Rate
@@ -126,7 +126,7 @@ namespace Hyflame.ZeroCurve
         public static double 折現因子_D_R(double r, double d, double actual = ACTUAL)
         {
             double t = d / actual;
-            double DF = 折現因子_T_R(r, t);
+            double DF = 折現因子_T_R(r / 100, t);
             return DF;
         }
         /// <summary>
@@ -137,7 +137,7 @@ namespace Hyflame.ZeroCurve
         /// <returns></returns>
         public static double 折現因子_T_R(double r, double t)
         {
-            double DF = 1 / (1 + r * t);
+            double DF = 1 / (1 + r / 100 * t);
             return DF;
         }
         /// <summary>

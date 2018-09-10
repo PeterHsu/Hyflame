@@ -34,7 +34,7 @@ namespace Hyflame.ZeroCurve
         public DateTime AdjustTradeDate(DateTime date)
         {
             var tradeDate = (from item in m_tradeDateList
-                             where item > date
+                             where item >= date
                              orderby item
                              select item).First();
             return tradeDate;
