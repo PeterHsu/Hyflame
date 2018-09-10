@@ -161,7 +161,7 @@ namespace Hyflame.ZeroCurve
         /// <returns></returns>
         public static double 折現因子_T_Z(double z, double t)
         {
-            double DF = Math.Exp(-1 * z * t);
+            double DF = Math.Exp(-1 * z / 100 * t);
             return DF;
         }
         #endregion 已驗證過的函式

@@ -30,10 +30,10 @@ namespace Hyflame.Formula.Tester
             parRateElfList.Add(new ParRateElf(60, EnumTenorUnit.Day, 0.6013, EnumRateMarket.Taibor, 60));
             parRateElfList.Add(new ParRateElf(90, EnumTenorUnit.Day, 0.6517, EnumRateMarket.Taibor, 91));
             parRateElfList.Add(new ParRateElf(180, EnumTenorUnit.Day, 0.7653, EnumRateMarket.Taibor, 182));
-            parRateElfList.Add(new ParRateElf(1, EnumTenorUnit.Year, 0.7025, EnumRateMarket.COSMOS, 367));
-            parRateElfList.Add(new ParRateElf(2, EnumTenorUnit.Year, 0.755, EnumRateMarket.COSMOS, 735));
-            parRateElfList.Add(new ParRateElf(3, EnumTenorUnit.Year, 0.7675, EnumRateMarket.COSMOS, 1099));
-            parRateElfList.Add(new ParRateElf(4, EnumTenorUnit.Year, 0.86, EnumRateMarket.COSMOS, 1463));
+            parRateElfList.Add(new ParRateElf(1, EnumTenorUnit.Year, 0.6975, EnumRateMarket.COSMOS, 367));
+            parRateElfList.Add(new ParRateElf(2, EnumTenorUnit.Year, 0.7475, EnumRateMarket.COSMOS, 735));
+            parRateElfList.Add(new ParRateElf(3, EnumTenorUnit.Year, 0.825, EnumRateMarket.COSMOS, 1099));
+            parRateElfList.Add(new ParRateElf(4, EnumTenorUnit.Year, 0.845, EnumRateMarket.COSMOS, 1463));
             parRateElfList.Add(new ParRateElf(5, EnumTenorUnit.Year, 0.915, EnumRateMarket.COSMOS, 1828));
             RateMaster rateMaster = new RateMaster(tradeDate, tradeDate.AddYears(10), parRateElfList, holidays);
             rateMaster.Run();

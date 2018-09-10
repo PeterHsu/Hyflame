@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using NLog.Config;
+using System;
 
 namespace Hyflame.Formula.Tester
 {
@@ -6,6 +8,8 @@ namespace Hyflame.Formula.Tester
     {
         static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            NLog.LogManager.Configuration = new XmlLoggingConfiguration(config["nlog.config"]);
             //TestWarrant();
             //TestWarrant2();
             //TestIRS();

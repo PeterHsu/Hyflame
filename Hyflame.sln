@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hyflame.Formula.Tester", "H
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tester", "Tester", "{CE122E04-BB09-4B0A-94E1-CCEA6030B372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroCurve", "ZeroCurve\ZeroCurve.csproj", "{F448CE3A-46C6-4D2B-B79F-674AE6D81F7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeroCurve", "ZeroCurve\ZeroCurve.csproj", "{F448CE3A-46C6-4D2B-B79F-674AE6D81F7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
