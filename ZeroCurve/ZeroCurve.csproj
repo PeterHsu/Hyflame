@@ -4,6 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Hyflame.ZeroCurve</AssemblyName>
     <RootNamespace>Hyflame.ZeroCurve</RootNamespace>
+    <AssemblyVersion>1.2018.0910.0</AssemblyVersion>
+    <FileVersion>1.2018.0910.0</FileVersion>
+    <Version>1.2018.0910.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
