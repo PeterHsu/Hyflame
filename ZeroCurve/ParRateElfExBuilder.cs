@@ -37,6 +37,7 @@ namespace Hyflame.ZeroCurve
                     break;
             }
         }
+      
         private void AddParRateForInterbank(DateTime startDate, ParRateElf parRateInfo)
         {
             //# 一定是ON或TN, 央行沒有報TN, 所以會用ON的利率帶進來
@@ -88,6 +89,7 @@ namespace Hyflame.ZeroCurve
                              orderby item.Days descending
                              select item).First();
             GetZero(maxTaibor, cosmosList);
+            logger.Info("ParRateExList={@parRateExList}", this.ParRateList);
             #endregion
         }
         private void GetZero(ParRateElfEx maxTaibor, List<ParRateElfEx> cosmosList)
@@ -117,7 +119,7 @@ namespace Hyflame.ZeroCurve
                     double value2 = YieldCurveLinearBootstrap1(cosmosList[swap].DaysAct, lastRateElfEx, slope2, cosmosList[swap].DaysAct, cosmosList[swap].Rate);
                     //# 以下不知
                     double dx = (value2 - value1) / fixedRate;
-                    logger.Info($"year={cosmosList[swap].DaysAct}, Rate={cosmosList[swap].Rate}, Swaps={swap + 1}, slope1={slope1}, value1={value1}, zeroRate={zero}, slope2={slope2}, value2={value2}, dx={dx}");
+                    //logger.Info($"year={cosmosList[swap].DaysAct}, Rate={cosmosList[swap].Rate}, Swaps={swap + 1}, slope1={slope1}, value1={value1}, zeroRate={zero}, slope2={slope2}, value2={value2}, dx={dx}");
                     if (Math.Abs(dx) < epsilon) break;
                     slope1 = slope1 - (0 - value1) / dx;
                 }

@@ -1,6 +1,7 @@
 ﻿using Hyflame.ZeroCurve.Elves;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hyflame.ZeroCurve
@@ -34,6 +35,19 @@ namespace Hyflame.ZeroCurve
                 parRateBuilder.AddParRate(parRateElf);
             }
             this.ParRateList = parRateBuilder.ParRateList;
+        }
+        public double GetZeroRate_D(double d)
+        {
+            double t = d / 365d;
+            var interpolate = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Zero));
+            double zero = interpolate.Interpolate(t);
+            return zero;
+        }
+        public double GetZeroRate_T(double t)
+        {
+            var interpolate = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Zero));
+            double zero = interpolate.Interpolate(t);
+            return zero;
         }
     }
 }
