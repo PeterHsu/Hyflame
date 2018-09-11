@@ -14,6 +14,7 @@ namespace Hyflame.ZeroCurve.Elves
     {
         Interbank,
         Taibor,
-        COSMOS
+        COSMOS,
+        None
     }
 }

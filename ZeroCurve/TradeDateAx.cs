@@ -70,7 +70,7 @@ namespace Hyflame.ZeroCurve
             {
                 settlementDay = AdjustSettlementDay(settlementDay); //# 調整清算日邏輯
             }
-            int totalDays = (int)(settlementDay - spotDate).TotalDays;
+            int totalDays = (int)(settlementDay - tradeDate).TotalDays;
             return (settlementDay, isLastDate, totalDays);
         }
         /// <summary>
