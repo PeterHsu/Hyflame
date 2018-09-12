@@ -55,17 +55,6 @@ namespace Hyflame.ZeroCurve
             double FV = PV * Math.Exp(z * t);
             return FV;
         }
-        public static double 折現因子_D_零息利率(double z, double d, double actual = ACTUAL)
-        {
-            double t = d / actual;
-            double DF = 折現因子_T_零息利率(z, t);
-            return DF;
-        }
-        public static double 折現因子_T_零息利率(double z, double t)
-        {
-            double DF = Math.Exp(-1 * z * t);
-            return DF;
-        }
         public static double 零息利率_D_折現因子(double DF, double d, double actual = ACTUAL)
         {
             double t = d / actual;
@@ -109,10 +98,10 @@ namespace Hyflame.ZeroCurve
         /// <param name="d"></param>
         /// <param name="actual"></param>
         /// <returns></returns>
-        public static double TN零息利率(double DF1d, double r, double d, double actual = ACTUAL)
+        public static double TN零息利率(double DF1d, double r, double d, double s, double actual = ACTUAL)
         {
             double t = d / actual;
-            double t2 = (d - 1) / actual;
+            double t2 = s / actual;
             double z = -1 * Math.Log(DF1d / (1 + r / 100 * t2)) / t;
             return z * 100;
         }

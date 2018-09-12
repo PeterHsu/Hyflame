@@ -52,7 +52,7 @@ namespace Hyflame.ZeroCurve
             double zero = interpolate.Interpolate(t);
 
             double FR = RateAx.遠期利率2(zero1, t1, zero2, 90); //# 算上一期到加90天的利率
-            double DF = RateAx.折現因子_T_零息利率(zero, t);
+            double DF = RateAx.折現因子_T_Z(zero, t);
             double newZero = RateAx.零息利率_T_折現因子(DF, t);
 
             var interpolate2 = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Rate));
@@ -64,11 +64,11 @@ namespace Hyflame.ZeroCurve
         public YieldElf[] GetCurve(int year)
         {
             List<YieldElf> yieldList = new List<YieldElf>();
-            foreach (var item in this.ParRateList)
-            {
-                (double zero, double FR, double DF, double newZero, double rate) = GetYield_T(item.DaysAct, item.DaysAct - 90 / 365d);
-                yieldList.Add(new YieldElf(item, FR));
-            }
+            //foreach (var item in this.ParRateList)
+            //{
+            //    (double zero, double FR, double DF, double newZero, double rate) = GetYield_T(item.DaysAct, item.DaysAct - 90 / 365d);
+            //    yieldList.Add(new YieldElf(item, FR));
+            //}
             for (int i = 0; i < year; i++)
             {
                 for (int j = 1; j <= 4; j++)

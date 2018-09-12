@@ -30,7 +30,7 @@ namespace Hyflame.Formula.Tester
             Console.WriteLine($"驗證零息利率推現值:{newPV}");
             newFV = RateAx.終值_D_零息利率(PV, zero, d);
             Console.WriteLine($"驗證零息利率推終值:{newFV}");
-            double newDF = RateAx.折現因子_D_零息利率(zero, d);
+            double newDF = RateAx.折現因子_D_Z(zero, d);
             Console.WriteLine($"從零息利率找折現因子:{newDF}");
             double newZero = RateAx.零息利率_D_折現因子(DF, d);
             Console.WriteLine($"從折現因子找零息利率:{newZero}");

@@ -52,7 +52,8 @@ namespace Hyflame.ZeroCurve
                 {
                     throw new Exception("沒有O/N無法計算T/N的零息利率");
                 }
-                zero = RateAx.TN零息利率(ON.DF, parRateInfo.Rate, days);
+                double s = days - ON.Days;
+                zero = RateAx.TN零息利率(ON.DF, parRateInfo.Rate, days, s);
             }
             else
                 zero = RateAx.零息利率_T_R(parRateInfo.Rate, daysAct);
@@ -206,7 +207,16 @@ namespace Hyflame.ZeroCurve
             {
                 #region 取到期日
                 if (parRateInfo.Unit == EnumTenorUnit.Day)
-                    endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
+                {
+                    if (parRateInfo.Tenor == 1 || parRateInfo.Tenor == 2) //# O/N, T/N
+                    {
+                        endDate = m_tradeDateAx.AddTradeDate(startDate, parRateInfo.Tenor);
+                    }
+                    else
+                    {
+                        endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddDays(parRateInfo.Tenor));
+                    }
+                }
                 if (parRateInfo.Unit == EnumTenorUnit.Month)
                     endDate = m_tradeDateAx.AdjustTradeDate(startDate.AddMonths(parRateInfo.Tenor));
                 if (parRateInfo.Unit == EnumTenorUnit.Year)
