@@ -43,15 +43,16 @@ namespace Hyflame.ZeroCurve
             double zero = interpolate.Interpolate(t);
             return zero;
         }
-        public (double, double, double, double, double) GetYield_T(double t, double t1)
+        public (double, double, double, double, double) GetYield_T(double t)
         {
             //# 零息利率, 遠期利率, 折現因子, 驗證零息利率, Swap
             var interpolate = MathNet.Numerics.Interpolate.Linear(this.ParRateList.Select(p => p.DaysAct), this.ParRateList.Select(p => p.Zero));
-            double zero2 = interpolate.Interpolate(t1 + 90 / 365d);
-            double zero1 = interpolate.Interpolate(t1);
+            //# 從此天+90為遠期利率
+            double t2 = t + 90 / 365d;
+            double zero2 = interpolate.Interpolate(t2);
             double zero = interpolate.Interpolate(t);
 
-            double FR = RateAx.遠期利率e(zero2, t1 + 90 / 365d, zero1, t1); //# 算上一期到加90天的利率
+            double FR = RateAx.遠期利率e(zero, t ,zero2, t2); //# 算上一期到加90天的利率
             double DF = RateAx.折現因子_T_Z(zero, t);
             double newZero = RateAx.零息利率_T_折現因子(DF, t);
 
@@ -80,7 +81,7 @@ namespace Hyflame.ZeroCurve
                     DateTime startDate = DateTime.Today;
                     (DateTime endDate, bool isLastDay, double days) = m_tradeDateAx.GetSettlementDate(startDate, (i * 4 ) + j );
                     double daysAct = days / 365d;
-                    (double zero, double fr, double df, double newZero, double swap) = GetYield_T(daysAct, daysAct - 90 / 365d);
+                    (double zero, double fr, double df, double newZero, double swap) = GetYield_T(daysAct);
                     YieldElf yieldElf = new YieldElf(tenor, unit, rate, market, startDate, endDate, days, daysAct, zero, df, fr);
                     bool exist = (from item in yieldList
                                   where item.Days == days

@@ -25,8 +25,8 @@ namespace Hyflame.Formula.Tester
             //TestIRS2();
             //RateTester.Test單利();
             //RateMasterTester.Test();
-            //RateTester.Test遠期利率();
-            RateTester.Test單複利();
+            RateTester.Test遠期利率();
+            //RateTester.Test單複利();
             Console.ReadLine();
         }
         static void TestIRS2()

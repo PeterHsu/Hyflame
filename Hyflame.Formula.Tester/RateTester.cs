@@ -18,12 +18,12 @@ namespace Hyflame.Formula.Tester
         }
         internal static void Test遠期利率()
         {
-            double r1 = 5;
-            double t1 = 2;
-            double n = 1;
+            double r1 = 0.6916437211111013;
+            double t1 = 2375;
+            double n = 90;
 
-            double r2 = 6;
-            double t2 = 3;
+            double r2 = 1.0334337150205943;
+            double t2 = t1 + n;
             double rf = RateAx.遠期利率e(r1, t1 / 365d, r2, t2 / 365d);
             Console.WriteLine(rf);
             double FV = RateAx.終值_遠期利率e(r1, t1 / 365d, rf, (t2 - t1) / 365d);
