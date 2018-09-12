@@ -8,6 +8,45 @@ namespace Hyflame.Formula.Tester
 {
     static class RateTester
     {
+        internal static void Test單複利()
+        {
+            double r1 = 3;
+            double d = 50;
+            double FV1 = RateAx.單利終值_D(1, r1, d);
+            Console.WriteLine(FV1);
+
+        }
+        internal static void Test遠期利率()
+        {
+            double r1 = 5;
+            double t1 = 2;
+            double n = 1;
+
+            double r2 = 6;
+            double t2 = 3;
+            double rf = RateAx.遠期利率e(r1, t1 / 365d, r2, t2 / 365d);
+            Console.WriteLine(rf);
+            double FV = RateAx.終值_遠期利率e(r1, t1 / 365d, rf, (t2 - t1) / 365d);
+            Console.WriteLine(FV);
+            double FV2 = RateAx.終值_D_零息利率(1, r2, t2);
+            Console.WriteLine(FV2);
+
+        }
+        //internal static void Test遠期利率()
+        //{
+        //    double V1 = 0.953516;
+        //    double V2 = 0.909091;
+        //    int F = 2;
+
+        //    double Rtn = Rate.遠期利率(V1, V2, F);
+        //    Console.WriteLine(Rtn);
+
+        //    V1 = 0.93457944;
+        //    V2 = 0.86922423;
+        //    F = 1;
+        //    Rtn = Rate.遠期利率(V1, V2, F);
+        //    Console.WriteLine(Rtn);
+        //}
         internal static void Test單利()
         {
             //# 單利公式
@@ -22,7 +61,7 @@ namespace Hyflame.Formula.Tester
             Console.WriteLine($"驗證折現因子推現值:{newPV}");
             double newFV = RateAx.終值_折現因子(PV, DF);
             Console.WriteLine($"驗證折現因子推終值:{newFV}");
-            Console.WriteLine("".PadRight(10,'-'));
+            Console.WriteLine("".PadRight(10, '-'));
             //# 零息利率公式
             double zero = RateAx.零息利率_D_R(R, d);
             Console.WriteLine($"零息利率為:{zero}", zero);
@@ -103,21 +142,7 @@ namespace Hyflame.Formula.Tester
             Console.WriteLine(Rtn);
 
         }
-        internal static void Test遠期利率()
-        {
-            double V1 = 0.953516;
-            double V2 = 0.909091;
-            int F = 2;
 
-            double Rtn = Rate.遠期利率(V1, V2, F);
-            Console.WriteLine(Rtn);
-
-            V1 = 0.93457944;
-            V2 = 0.86922423;
-            F = 1;
-            Rtn = Rate.遠期利率(V1, V2, F);
-            Console.WriteLine(Rtn);
-        }
         internal static void PeterTest()
         {
             Console.WriteLine(Rate.單利折現因子(0.259, 10 / 365d));

@@ -51,7 +51,7 @@ namespace Hyflame.ZeroCurve
             double zero1 = interpolate.Interpolate(t1);
             double zero = interpolate.Interpolate(t);
 
-            double FR = RateAx.遠期利率2(zero1, t1, zero2, 90); //# 算上一期到加90天的利率
+            double FR = RateAx.遠期利率e(zero2, t1 + 90 / 365d, zero1, t1); //# 算上一期到加90天的利率
             double DF = RateAx.折現因子_T_Z(zero, t);
             double newZero = RateAx.零息利率_T_折現因子(DF, t);
 
